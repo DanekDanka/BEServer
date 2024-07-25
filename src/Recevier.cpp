@@ -27,22 +27,14 @@ void Recevier::init(int port) {
 
 }
 
-void Recevier::receive() {
+void Recevier::receive(char * buff) {
     socklen_t len;
     int n;
 
     len = sizeof(cliaddr);
 
-    n = recvfrom(sockfd, (char *) buffer, 1024,
+    n = recvfrom(sockfd, (char *) buff, 1014,
                  MSG_WAITALL, (struct sockaddr *) &cliaddr,
                  &len);
-    buffer[n] = '\0';
-    std::cout << "Client : " << buffer << std::endl;
-
-    std::string name;
-    std::string data;
-    std::istringstream in(buffer);
-    in >> name;
-    std::getline(in, data);
-    std::cout << "name data " << name << data << std::endl;
+    buff[n] = '\0';
 }

@@ -12,6 +12,10 @@ add_executable(BEServer main.cpp
         include/Fabric.h
         src/Recevier.cpp
         include/Recevier.h
+        src/Storage.cpp
+        include/Storage.h
+        src/Message.cpp
+        include/Message.h
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

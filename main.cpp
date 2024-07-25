@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     }
 
     Server server(atoi(argv[1]));
-    server.getMessage();
+    server.handler();
 
     return 0;
 }

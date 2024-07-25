@@ -21,20 +21,12 @@ void Sender::init(int PORT, const char *ip) {
 
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(PORT);
-    servaddr.sin_addr.s_addr = inet_addr(ip);
+    servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 }
 
 void Sender::send(const char *data) {
-    sendto(sockfd, data, sizeof(data), 0, (const struct sockaddr *)&servaddr, sizeof(servaddr));
+    sendto(sockfd, data, strlen(data), 0, (const struct sockaddr *)&servaddr, sizeof(servaddr));
     std::cout << "Message sent" << std::endl;
-}
-
-void Sender::receive(char *buffer) {
-    size_t n = 0;
-    socklen_t len;
-    n = recvfrom(sockfd, buffer, maxlen, MSG_WAITALL, (struct sockaddr*)&servaddr, &len);
-    buffer[n] = '\0';
-    std::cout << "Message received" << std::endl;
 }
 
 void Sender::endCommunication() {

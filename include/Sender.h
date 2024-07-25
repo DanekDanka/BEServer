@@ -9,9 +9,8 @@ public:
     Sender();
     ~Sender();
 
-    void init(int PORT, const char *ip);
+    void init(int PORT, const char *ip);            //TODO: для отправления нескольким клиентам
     void send(const char * data);
-    void receive(char * buffer);
     void endCommunication();
 
 private:

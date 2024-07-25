@@ -8,12 +8,11 @@ public:
     ~Recevier() = default;
 
     void init(int port);
-    void receive();
+    void receive(char *buff);
 
 
 private:
     int sockfd;
-    char buffer[1024];
     struct sockaddr_in servaddr;
     struct sockaddr_in cliaddr;
 };
