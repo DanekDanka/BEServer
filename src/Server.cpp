@@ -5,7 +5,7 @@
 #include "../include/Fabric.h"
 
 Server::Server(int port) {
-    sender.init(port + 1, "0");       //TODO: для отправления нескольким клиентам
+    sender.init(port + 1, "127.0.0.1");       //TODO: для отправления нескольким клиентам
     recevier.init(port);
 }
 

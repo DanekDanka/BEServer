@@ -7,6 +7,7 @@
 #include "Sender.h"
 #include "Recevier.h"
 #include "Storage.h"
+#include "SocketConnection.h"
 
 class Server {
 public:
@@ -23,8 +24,11 @@ private:
     std::vector<std::thread> threads;
 
     Storage storage;
+
     Sender sender;
     Recevier recevier;
+//    SocketConnection socket;
+
     std::string nameSendedMessage;
 };
 
