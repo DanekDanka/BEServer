@@ -3,21 +3,15 @@ project(BEServer)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#add_library(${PROJECT_NAME} SHARED
-#        src/core.cpp
-#        include/core.h
-#)
-
 add_executable(BEServer main.cpp
-        src/Client.cpp
-        src/MessageStr.cpp
+        src/Server.cpp
         src/Sender.cpp
         src/Fabric.cpp
-        include/Client.h
-        include/IMessage.h
-        include/MessageStr.h
+        include/Server.h
         include/Sender.h
         include/Fabric.h
+        src/Recevier.cpp
+        include/Recevier.h
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
