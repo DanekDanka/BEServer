@@ -5,7 +5,7 @@
 #include "../include/Fabric.h"
 #include "ServerLogger.h"
 
-Server::Server(int port, std::string ip) {
+Server::Server(int port, char *ip) {
 //    sender.init(port + 1, ip.data());       //TODO: для отправления нескольким клиентам
 //    recevier.init(port);
     socket.init(port, ip);
@@ -80,41 +80,47 @@ void Server::handler() {
             sendErrors();
             logger.getErrors().clear();
         } else if (!nameSendedMessage.empty()) {
-            sendMessage(nameSendedMessage);
+            if (storage.getDataByName(nameSendedMessage).length() < 1014) {
+                sendMessage(nameSendedMessage);
+                nameSendedMessage.clear();
+            } else {
+                nameSendedMessage.clear();
+                logger.error("[ERROR] Возвращаемое сообщение более 1024 байт\n");
+                sendErrors();
+                logger.getErrors().clear();
+            }
+        }
+    }
+}
+
+    void Server::sendMessage(const std::string &name) {
+//    sender.send("-BEGIN-");
+//    sender.send(storage.getDataByName(nameSendedMessage).data());
+//    sender.send("-END-");
+        socket.send("-BEGIN-");
+        socket.send(storage.getDataByName(nameSendedMessage).data());
+        socket.send("-END-");
+    }
+
+    void Server::checkErrors() {
+        if (!storage.getErrors().empty()) {
+//        sender.send(storage.getErrors().data());
+            socket.send(storage.getErrors().data());
+            storage.getErrors().clear();
             nameSendedMessage.clear();
         }
     }
 
-}
-
-void Server::sendMessage(const std::string &name) {
-//    sender.send("-BEGIN-");
-//    sender.send(storage.getDataByName(nameSendedMessage).data());
-//    sender.send("-END-");
-    socket.send("-BEGIN-");
-    socket.send(storage.getDataByName(nameSendedMessage).data());
-    socket.send("-END-");
-}
-
-void Server::checkErrors() {
-    if (!storage.getErrors().empty()) {
-//        sender.send(storage.getErrors().data());
-        socket.send(storage.getErrors().data());
-        storage.getErrors().clear();
-        nameSendedMessage.clear();
-    }
-}
-
-void Server::sendErrors() {
+    void Server::sendErrors() {
 //    sender.send("-ERROR-");
-    socket.send("-ERROR-");
-    for (int i = 0; i < logger.getErrors().size(); ++i) {
+        socket.send("-ERROR-");
+        for (int i = 0; i < logger.getErrors().size(); ++i) {
 //        sender.send(logger.getErrors().at(i).data());
-        socket.send(logger.getErrors().at(i).data());
-    }
+            socket.send(logger.getErrors().at(i).data());
+        }
 //    sender.send("-END-");
-    socket.send("-END-");
-}
+        socket.send("-END-");
+    }
 
 
 

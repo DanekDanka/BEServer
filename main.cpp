@@ -4,10 +4,6 @@
 #include "include/Server.h"
 #include "ServerLogger.h"
 
-#define PORT     8080
-#define MAXLINE 1024
-
-// 0    port
 int main(int argc, char* argv[]) {
     if (argc == 0) {
         std::cerr << "Введено неправильное количество параметров" << '\n' << "Введите: port" << std::endl;

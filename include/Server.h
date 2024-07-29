@@ -11,7 +11,7 @@
 
 class Server {
 public:
-    Server(int port, std::string ip);
+    Server(int port, char *ip);
     ~Server();
 
     void sendMessage(const std::string& name);
