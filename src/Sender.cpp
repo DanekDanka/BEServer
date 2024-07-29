@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "../include/Sender.h"
+#include "ServerLogger.h"
 
 Sender::Sender() {}
 
@@ -13,7 +14,7 @@ Sender::~Sender() {
 
 void Sender::init(int PORT, const char *ip) {
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-        std::cerr << "[ERROR] Socket creation failed" << std::endl;
+        logger.error("[ERROR] Socket creation failed\n");
         exit(EXIT_FAILURE);
     }
 
@@ -25,8 +26,8 @@ void Sender::init(int PORT, const char *ip) {
 }
 
 void Sender::send(const char *data) {
-    sendto(sockfd, data, strlen(data), 0, (const struct sockaddr *)&servaddr, sizeof(servaddr));
-    std::cout << "Message sent" << std::endl;
+    sendto(sockfd, data, strlen(data), 0, (const struct sockaddr *) &servaddr, sizeof(servaddr));
+    logger.log("Message sent\n");
 }
 
 void Sender::endCommunication() {

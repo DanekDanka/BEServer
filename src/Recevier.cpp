@@ -8,7 +8,7 @@
 
 void Recevier::init(int port) {
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-        std::cerr << "socket creation failed" << std::endl;
+        logger.error("socket creation failed\n");
         exit(EXIT_FAILURE);
     }
 
@@ -21,7 +21,7 @@ void Recevier::init(int port) {
 
     if (bind(sockfd, (const struct sockaddr *) &servaddr,
              sizeof(servaddr)) < 0) {
-        std::cerr << "bind failed" << std::endl;
+        logger.error("bind failed\n");
         exit(EXIT_FAILURE);
     }
 

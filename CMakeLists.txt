@@ -18,6 +18,8 @@ add_executable(BEServer main.cpp
         include/Message.h
         include/SocketConnection.h
         src/SocketConnection.cpp
+        src/ServerLogger.cpp
+        include/ServerLogger.h
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

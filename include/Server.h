@@ -11,13 +11,15 @@
 
 class Server {
 public:
-    Server(int port);
+    Server(int port, std::string ip);
     ~Server();
 
     void sendMessage(const std::string& name);
     void getMessage();
-    static void readMessage(std::string &name, std::string &data, const char *buff);
+    void readMessage(std::string &name, std::string &data, const char *buff);
     void handler();         //TODO: плохое название, переделать
+    void checkErrors();
+    void sendErrors();
 
 private:
     std::mutex mutex;
@@ -30,5 +32,6 @@ private:
 //    SocketConnection socket;
 
     std::string nameSendedMessage;
+    ServerLogger &logger {ServerLogger::initialisation()};
 };
 

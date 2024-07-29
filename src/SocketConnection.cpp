@@ -18,19 +18,20 @@ void SocketConnection::init(int PORT, const char *ip) {
     memset(&cliaddr, 0, sizeof(cliaddr));
 
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(PORT);
     servaddr.sin_addr.s_addr = INADDR_ANY;
+    servaddr.sin_port = htons(PORT);
 
     if (bind(sockfd, (const struct sockaddr *) &servaddr,
              sizeof(servaddr)) < 0) {
         std::cerr << "bind failed" << std::endl;
+        close(sockfd);
         exit(EXIT_FAILURE);
     }
 
 }
 
 void SocketConnection::send(const char *data) {
-    sendto(sockfd, data, strlen(data), 0, (const struct sockaddr *)&servaddr, sizeof(servaddr));
+    sendto(sockfd, data, strlen(data), 0, (const struct sockaddr *)&cliaddr, sizeof(cliaddr));
     std::cout << "Message sent" << std::endl;
 }
 

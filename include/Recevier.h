@@ -1,6 +1,7 @@
 #pragma once
 
 #include <netinet/in.h>
+#include "ServerLogger.h"
 
 class Recevier {
 public:
@@ -15,4 +16,5 @@ private:
     int sockfd;
     struct sockaddr_in servaddr;
     struct sockaddr_in cliaddr;
+    ServerLogger &logger {ServerLogger::initialisation()};
 };

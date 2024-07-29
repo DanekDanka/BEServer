@@ -3,6 +3,7 @@
 #include <string>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include "ServerLogger.h"
 
 class Sender {
 public:
@@ -17,6 +18,7 @@ private:
     int maxlen;
     int sockfd;
     struct sockaddr_in servaddr;
+    ServerLogger &logger {ServerLogger::initialisation()};
 };
 
 
