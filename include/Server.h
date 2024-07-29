@@ -27,9 +27,9 @@ private:
 
     Storage storage;
 
-    Sender sender;
-    Recevier recevier;
-//    SocketConnection socket;
+//    Sender sender;
+//    Recevier recevier;
+    SocketConnection socket;
 
     std::string nameSendedMessage;
     ServerLogger &logger {ServerLogger::initialisation()};

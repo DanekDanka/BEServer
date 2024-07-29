@@ -8,7 +8,7 @@
 #include "Sender.h"
 
 
-void SocketConnection::init(int PORT, const char *ip) {
+void SocketConnection::init(int PORT, std::string &ip) {
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
         std::cerr << "socket creation failed" << std::endl;
         exit(EXIT_FAILURE);

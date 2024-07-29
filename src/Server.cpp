@@ -6,20 +6,23 @@
 #include "ServerLogger.h"
 
 Server::Server(int port, std::string ip) {
-    sender.init(port + 1, ip.data());       //TODO: для отправления нескольким клиентам
-    recevier.init(port);
+//    sender.init(port + 1, ip.data());       //TODO: для отправления нескольким клиентам
+//    recevier.init(port);
+    socket.init(port, ip);
 }
 
 Server::~Server() {
     for (int i = 0; i < threads.size(); ++i)
         threads[i].join();
 
-    sender.endCommunication();
+//    sender.endCommunication();
+    socket.endCommunication();
 }
 
 void Server::getMessage() {
     char buff[1014];
-    recevier.receive(buff);
+//    recevier.receive(buff);
+    socket.receive(buff);
     std::string name;
     std::string data;
     readMessage(name, data, buff);
@@ -85,25 +88,32 @@ void Server::handler() {
 }
 
 void Server::sendMessage(const std::string &name) {
-    sender.send("-BEGIN-");
-    sender.send(storage.getDataByName(nameSendedMessage).data());
-    sender.send("-END-");
+//    sender.send("-BEGIN-");
+//    sender.send(storage.getDataByName(nameSendedMessage).data());
+//    sender.send("-END-");
+    socket.send("-BEGIN-");
+    socket.send(storage.getDataByName(nameSendedMessage).data());
+    socket.send("-END-");
 }
 
 void Server::checkErrors() {
     if (!storage.getErrors().empty()) {
-        sender.send(storage.getErrors().data());
+//        sender.send(storage.getErrors().data());
+        socket.send(storage.getErrors().data());
         storage.getErrors().clear();
         nameSendedMessage.clear();
     }
 }
 
 void Server::sendErrors() {
-    sender.send("-ERROR-");
+//    sender.send("-ERROR-");
+    socket.send("-ERROR-");
     for (int i = 0; i < logger.getErrors().size(); ++i) {
-        sender.send(logger.getErrors().at(i).data());
+//        sender.send(logger.getErrors().at(i).data());
+        socket.send(logger.getErrors().at(i).data());
     }
-    sender.send("-END-");
+//    sender.send("-END-");
+    socket.send("-END-");
 }
 
 

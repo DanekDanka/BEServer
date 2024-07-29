@@ -1,13 +1,14 @@
 #pragma once
 
 #include <netinet/in.h>
+#include <string>
 
 class SocketConnection {
 public:
     SocketConnection() = default;
     ~SocketConnection() = default;
 
-    void init(int PORT, const char *ip);
+    void init(int PORT, std::string &ip);
 
     void receive(char *buff);
     void send(const char * data);
