@@ -3,14 +3,12 @@
 #include <netinet/in.h>
 #include <cstring>
 #include <arpa/inet.h>
-#include <iostream>
 #include <unistd.h>
-#include "Sender.h"
 
 
 void SocketConnection::init(int PORT, char *ip) {
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
-        std::cerr << "socket creation failed" << std::endl;
+        fprintf(stderr, "[ERROR] Socket creation failed\n");
         exit(EXIT_FAILURE);
     }
 
@@ -19,12 +17,11 @@ void SocketConnection::init(int PORT, char *ip) {
 
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = inet_addr(ip);
-//    servaddr.sin_addr.s_addr = INADDR_ANY;
     servaddr.sin_port = htons(PORT);
 
     if (bind(sockfd, (const struct sockaddr *) &servaddr,
              sizeof(servaddr)) < 0) {
-        std::cerr << "bind failed" << std::endl;
+        fprintf(stderr, "[ERROR] Bind failed\n");
         close(sockfd);
         exit(EXIT_FAILURE);
     }
@@ -32,11 +29,13 @@ void SocketConnection::init(int PORT, char *ip) {
 }
 
 void SocketConnection::send(const char *data) {
-    sendto(sockfd, data, strlen(data), 0, (const struct sockaddr *)&cliaddr, sizeof(cliaddr));
-    std::cout << "Message sent" << std::endl;
+    if (sendto(sockfd, data, strlen(data), 0, (const struct sockaddr *) &cliaddr, sizeof(cliaddr)) < 0)
+        fprintf(stderr, "[ERROR] Message didn't send\n");
+    else
+        fprintf(stdout, "Message sent\n");
 }
 
-void SocketConnection::receive(char * buff) {
+void SocketConnection::receive(char *buff) {
     socklen_t len;
     int n;
 
@@ -50,4 +49,5 @@ void SocketConnection::receive(char * buff) {
 
 void SocketConnection::endCommunication() {
     close(sockfd);
+    fprintf(stdout, "Socket closed\n");
 }

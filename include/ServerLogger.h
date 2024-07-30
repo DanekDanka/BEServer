@@ -5,19 +5,24 @@
 
 class ServerLogger {
 public:
-    static ServerLogger& initialisation();
+    static ServerLogger &initialisation();
 
-    void error(const char * err);
-    void log(const char * str);
+    void error(const char *err);
+
+    void log(const char *str);
+
     void log(std::string &str);
+
     std::vector<std::string> &getErrors();
 
 private:
     ServerLogger() = default;
+
     ~ServerLogger() = default;
 
-    ServerLogger(ServerLogger const&) = delete;
-    ServerLogger & operator= (ServerLogger const&) = delete;
+    ServerLogger(ServerLogger const &) = delete;
+
+    ServerLogger &operator=(ServerLogger const &) = delete;
 
     std::vector<std::string> errors;
 };

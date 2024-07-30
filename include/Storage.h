@@ -7,15 +7,14 @@
 class Storage {
 public:
     Storage();
+
     ~Storage() = default;
 
-    void addError(char *error);
-    std::string &getErrors();
+    void setData(char *buff);
 
-    void setData(char * buff);
-    void setData(const std::string& name, const std::string& data);
+    void setData(const std::string &name, const std::string &data);
 
-    std::string getDataByName(const std::string& name);
+    std::string getDataByName(const std::string &name);
 
 private:
     std::stringstream buff;

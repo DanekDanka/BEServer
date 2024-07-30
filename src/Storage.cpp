@@ -1,7 +1,6 @@
 
 #include <sstream>
 #include <iostream>
-#include <algorithm>
 #include "Storage.h"
 #include "ServerLogger.h"
 
@@ -19,7 +18,6 @@ void Storage::setData(char *buff) {
     if (!data.empty()) {
         messages[name] += data.substr(5, data.length() - 1);
     }
-    std::cout << messages[name] << " MESSAGE" << std::endl;
 }
 
 void Storage::setData(const std::string &name, const std::string &data) {
@@ -41,14 +39,8 @@ std::string Storage::getDataByName(const std::string &name) {
                  (name == i.first.substr(0, name.length())))
             out += i.second + '\n';
     }
-    out.pop_back();
+    if (!out.empty())
+        out.pop_back();
     return out;
 }
 
-void Storage::addError(char *error) {
-    errors = buff.str();
-}
-
-std::string &Storage::getErrors() {
-    return errors;
-}
