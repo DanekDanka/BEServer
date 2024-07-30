@@ -58,5 +58,5 @@ make
 ```
 
 ```
-./BEServer
+./BEServer <ipv4> <PORT>
 ```
